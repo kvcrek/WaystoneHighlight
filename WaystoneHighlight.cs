@@ -10,6 +10,7 @@ using System.Numerics;
 using System.Drawing;
 using System;
 using System.Collections.Generic;
+using Microsoft.VisualBasic.Logging;
 
 namespace WaystoneHighlight;
 
@@ -80,7 +81,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
 
                 var itemMods = waystone.mods;
                 var bbox = waystone.rect;
-                
+
 
 
                 int prefixCount = 0;
@@ -119,7 +120,10 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                     }
                     else
                     {
-                        prefixCount++;
+                        if (mod.Group != "AfflictionMapDeliriumStacks")
+                        {
+                            prefixCount++;
+                        }
                     }
 
                     // Handle IIR mod
