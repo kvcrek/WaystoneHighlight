@@ -49,7 +49,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
         if (inventoryPanel.IsVisible)
         {
             // Add stash items
-            if (stashPanel.IsVisible)
+            if (stashPanel.IsVisible && stashPanel.VisibleStash != null)
             {
                 foreach (var item in stashPanel.VisibleStash.VisibleInventoryItems)
                 {
