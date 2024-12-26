@@ -68,12 +68,19 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
             {
 
                 var item = waystone.map;
+
                 if (item == null)
                     continue;
 
+                // Check for map tier
+                if (item.Tier < Settings.MinimumTier)
+                {
+                    continue;
+                }
+
                 var itemMods = waystone.mods;
                 var bbox = waystone.rect;
-
+                
 
 
                 int prefixCount = 0;
@@ -90,6 +97,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 // Iterate through the mods
                 foreach (var mod in itemMods.ItemMods)
                 {
+
                     // Check for banned modifiers
                     if (BannedModifiers.Count > 0)
                     {

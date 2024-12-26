@@ -11,6 +11,9 @@ public class WaystoneHighlightSettings : ISettings
     //Mandatory setting to allow enabling/disabling your plugin
     public ToggleNode Enable { get; set; } = new ToggleNode(false);
 
+    [Menu("Minimum map tier to highlight")]
+    public RangeNode<int> MinimumTier { get; set; } = new RangeNode<int>(1, 1, 16);
+
     [Menu("Minimum score to highlight map for crafting")]
     public RangeNode<int> MinimumCraftHighlightScore { get; set; } = new RangeNode<int>(20, 0, 1000);
 
