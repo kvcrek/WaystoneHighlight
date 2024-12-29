@@ -43,6 +43,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
 
 
         var stashPanel = InGameState.IngameUi.StashElement;
+        var stashPanelGuild = InGameState.IngameUi.GuildStashElement;
         var inventoryPanel = InGameState.IngameUi.InventoryPanel;
 
 
@@ -53,6 +54,12 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
             if (stashPanel.IsVisible && stashPanel.VisibleStash != null)
             {
                 foreach (var item in stashPanel.VisibleStash.VisibleInventoryItems)
+                {
+                    waystones.Add(new WaystoneItem(item.Item.GetComponent<Map>(), item.Item.GetComponent<Mods>(), item.GetClientRectCache));
+                }
+            } else if (stashPanelGuild.IsVisible && stashPanelGuild != null)
+            {
+                foreach (var item in stashPanelGuild.VisibleStash.VisibleInventoryItems)
                 {
                     waystones.Add(new WaystoneItem(item.Item.GetComponent<Map>(), item.Item.GetComponent<Mods>(), item.GetClientRectCache));
                 }
