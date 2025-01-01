@@ -89,8 +89,6 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 var itemMods = waystone.mods;
                 var bbox = waystone.rect;
 
-
-
                 int prefixCount = 0;
                 int suffixCount = 0;
 
@@ -99,13 +97,19 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 int iiq = 0;
                 int iir = 0;
                 bool extraRareMod = false;
+                int packSize = 0;
+                int magicPackSize = 0;
+                int extraPacks = 0;
+                int extraMagicPack = 0;
+                int extraRarePack = 0;
+                int additionalPacks = 0;
+
                 var drawColor = Color.White;
                 bool hasBannedMod = false;
 
                 // Iterate through the mods
                 foreach (var mod in itemMods.ItemMods)
                 {
-
                     // Check for banned modifiers
                     if (BannedModifiers.Count > 0)
                     {
@@ -133,30 +137,59 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                         }
                     }
 
-                    // Handle IIR mod
-                    if (mod.Name == "MapDroppedItemRarityIncrease")
+                    // Find good mods
+                    switch (mod.Name)
                     {
-                        iir += mod.Values[0];
-                    }
-                    else if (mod.Name == "MapDroppedItemQuantityIncrease")
-                    {
-                        iiq += mod.Values[0];
-                        // Some IIQ mods are hybrid, second value is the additional IIR
-                        if (mod.Values.Count != 1)
-                        {
-                            iir += mod.Values[1];
-                        }
-                    }
-                    // Check for +1 rare monster modifier
-                    else if (mod.Name == "MapRareMonstersAdditionalModifier")
-                    {
-                        extraRareMod = true;
+                        case "MapDroppedItemRarityIncrease":
+                            iir += mod.Values[0];
+                            break;
+                        case "MapDroppedItemQuantityIncrease":
+                            iiq += mod.Values[0];
+                            if (mod.Values.Count != 1)
+                            {
+                                iir += mod.Values[1];
+                            }
+                            break;
+                        case "MapRareMonstersAdditionalModifier":
+                            extraRareMod = true;
+                            break;
+                        case "MapPackSizeIncrease":
+                            packSize += mod.Values[0];
+                            break;
+                        case "MapMagicPackSizeIncrease":
+                            magicPackSize += mod.Values[0];
+                            break;
+                        case "MapTotalEffectivenessIncrease":
+                            extraPacks += mod.Values[0];
+                            break;
+                        case "MapMagicPackIncrease":
+                            extraMagicPack += mod.Values[0];
+                            break;
+                        case "MapMagicRarePackIncrease":
+                            extraRarePack += mod.Values[0];
+                            if (mod.Values.Count != 1)
+                            {
+                                extraMagicPack += mod.Values[1];
+                            } 
+                            break;
+                        case "MapRarePackIncrease":
+                            extraRarePack += mod.Values[0];
+                            break;
+                        case string s when s.StartsWith("MapMonsterAdditionalPacks"):
+                            additionalPacks += mod.Values[0];
+                            break;
                     }
                 }
 
                 // Sum the score
                 score += iiq * Settings.ScorePerQuantity;
                 score += iir * Settings.ScorePerRarity;
+                score += packSize * Settings.ScorePerPackSize;
+                score += magicPackSize * Settings.ScorePerMagicPackSize;
+                score += extraPacks * Settings.ScorePerExtraPacksPercent;
+                score += extraMagicPack * Settings.ScorePerExtraMagicPack;
+                score += extraRarePack * Settings.ScorePerExtraRarePack;
+                score += additionalPacks * Settings.ScorePerAdditionalPack;
                 if (extraRareMod)
                 {
                     score += Settings.ScoreForExtraRareMonsterModifier;
