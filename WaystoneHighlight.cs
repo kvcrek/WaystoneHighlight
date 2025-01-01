@@ -1,7 +1,6 @@
 ﻿using ExileCore2;
 using ExileCore2.PoEMemory.Components;
 using ExileCore2.PoEMemory.MemoryObjects;
-using ExileCore2.PoEMemory.Elements.InventoryElements;
 
 using System.Linq;
 
@@ -10,7 +9,7 @@ using System.Numerics;
 using System.Drawing;
 using System;
 using System.Collections.Generic;
-using Microsoft.VisualBasic.Logging;
+
 
 namespace WaystoneHighlight;
 
@@ -55,21 +54,20 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
             {
                 foreach (var item in stashPanel.VisibleStash.VisibleInventoryItems)
                 {
-                    waystones.Add(new WaystoneItem(item.Item.GetComponent<Map>(), item.Item.GetComponent<Mods>(), item.GetClientRectCache));
+                    waystones.Add(new WaystoneItem(item.Item.GetComponent<Base>(), item.Item.GetComponent<Map>(), item.Item.GetComponent<Mods>(), item.GetClientRectCache));
                 }
             } else if (stashPanelGuild.IsVisible && stashPanelGuild != null)
             {
                 foreach (var item in stashPanelGuild.VisibleStash.VisibleInventoryItems)
                 {
-                    waystones.Add(new WaystoneItem(item.Item.GetComponent<Map>(), item.Item.GetComponent<Mods>(), item.GetClientRectCache));
+                    waystones.Add(new WaystoneItem(item.Item.GetComponent<Base>(), item.Item.GetComponent<Map>(), item.Item.GetComponent<Mods>(), item.GetClientRectCache));
                 }
             }
             // Add inventory items
             var inventoryItems = GameController.IngameState.ServerData.PlayerInventories[0].Inventory.InventorySlotItems;
             foreach (var item in inventoryItems)
             {
-                waystones.Add(new(item.Item.GetComponent<Map>(), item.Item.GetComponent<Mods>(), item.GetClientRect()));
-
+                waystones.Add(new(item.Item.GetComponent<Base>(), item.Item.GetComponent<Map>(), item.Item.GetComponent<Mods>(), item.GetClientRect()));
             }
 
             foreach (var waystone in waystones)
@@ -106,6 +104,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
 
                 var drawColor = Color.White;
                 bool hasBannedMod = false;
+                bool isCorrupted = waystone.baseComponent.isCorrupted;
 
                 // Iterate through the mods
                 foreach (var mod in itemMods.ItemMods)
@@ -217,7 +216,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                             Graphics.DrawFrame(bbox, Color.LightGreen, 1);
                         }
                     }
-                    else if (score >= Settings.MinimumCraftHighlightScore)
+                    else if (score >= Settings.MinimumCraftHighlightScore && !isCorrupted)
                     {
                         if (prefixCount < 3)
                         {
