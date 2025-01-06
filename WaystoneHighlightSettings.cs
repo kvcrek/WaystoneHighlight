@@ -15,7 +15,7 @@ public class WaystoneHighlightSettings : ISettings
     [Menu("Score Features")]
     public ScoreSettings Score { get; set; } = new ScoreSettings();
     
-    [Menu("Graphics, Colors, and Performance Settings")]    
+    [Menu("Graphics, Colors, and Font Settings")]    
     public GraphicSettings Graphics { get; set; } = new GraphicSettings();
 }
 
