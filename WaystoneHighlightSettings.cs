@@ -73,6 +73,7 @@ public class ScoreSettings
 [Submenu(CollapsedByDefault = false)]
 public class GraphicSettings
 {
+//BORDER COLOR
    [Menu("Runnable Waystone Border Color", "Color of the Border of Runnable Waystones")]
     public ColorNode RunBorderColor { get; set; } = new ColorNode(Color.Green);
 
@@ -82,6 +83,7 @@ public class GraphicSettings
    [Menu("Banned Modifiers Waystone Border Color", "Color of the Border of Waystones with Banned Modifiers")]
     public ColorNode BannedBorderColor { get; set; } = new ColorNode(Color.Red);
 
+//BORDER THICKNESS
    [Menu("Runnable Waystone Border Thickness", "Thickness of the Border of Runnable Waystones")]
     public RangeNode<int> RunBorderThickness { get; set; } = new RangeNode<int>(1, 0, 5);
   
@@ -91,6 +93,8 @@ public class GraphicSettings
    [Menu("Banned Modifiers Waystone Border Thickness", "Thickness of the Border of Waystones with Banned Modifiers")]
     public RangeNode<int> BannedBorderThickness { get; set; } = new RangeNode<int>(1, 0, 5);
 
+
+//FONT SIZE (Needs modifications as text scales from origin point and doesn't change position accordingly)
    [Menu("Waystone Quantity+Rarity Font Size", "Size of the global font for Waystone Scores")]
     public RangeNode<float> QRFontSizeMultiplier { get; set; } = new RangeNode<float>(1.0f, 0.5f, 2f);
 
