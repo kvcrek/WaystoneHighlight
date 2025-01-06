@@ -218,25 +218,25 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 // Stats
                 // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
                 using (Graphics.SetTextScale(Settings.Graphics.QRFontSizeMultiplier)) {
-                    Graphics.DrawText(iir.ToString(), new Vector2(bbox.Left + 2, bbox.Top));
-                    Graphics.DrawText(iiq.ToString(), new Vector2(bbox.Left + 2, bbox.Top + 10));
+                    Graphics.DrawText(iir.ToString(), new Vector2(bbox.Left + 5, bbox.Top), ExileCore2.Shared.Enums.FontAlign.Left);
+                    Graphics.DrawText(iiq.ToString(), new Vector2(bbox.Left + 5, bbox.Top + 2 + (10 * Settings.Graphics.QRFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Left);
                     if (extraRareMod)
                     {
-                        Graphics.DrawText("+1", new Vector2(bbox.Left + 2, bbox.Top + 20));
+                        Graphics.DrawText("+1", new Vector2(bbox.Left + 5, bbox.Top + 4 + (20 * Settings.Graphics.QRFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Left);
                     }
                 }
 
                 // Affixes count
                  // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
                 using (Graphics.SetTextScale(Settings.Graphics.PrefSuffFontSizeMultiplier)) {
-                    Graphics.DrawText(prefixCount.ToString(), new Vector2(bbox.Right + -18, bbox.Top));
-                    Graphics.DrawText(suffixCount.ToString(), new Vector2(bbox.Right + -18, bbox.Top + 10));
+                    Graphics.DrawText(prefixCount.ToString(), new Vector2(bbox.Right - 5, bbox.Top), ExileCore2.Shared.Enums.FontAlign.Right);
+                    Graphics.DrawText(suffixCount.ToString(), new Vector2(bbox.Right - 5, bbox.Top + 2 + (10 * Settings.Graphics.PrefSuffFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Right);
                 }
 
                 // Score
                  // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
                 using (Graphics.SetTextScale(Settings.Graphics.ScoreFontSizeMultiplier)) {
-                    Graphics.DrawText(score.ToString(), new Vector2(bbox.Left + 2, bbox.Bottom - 15));
+                    Graphics.DrawText(score.ToString(), new Vector2(bbox.Left + 5, bbox.Bottom - 5 - (15 * Settings.Graphics.ScoreFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Left);
                 }
 
             }
