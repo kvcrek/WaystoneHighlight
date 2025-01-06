@@ -92,5 +92,5 @@ public class GraphicSettings
     public RangeNode<int> BannedBorderThickness { get; set; } = new RangeNode<int>(1, 0, 5);
 
    [Menu("Waystone Score Font Size", "Size of the global font for Waystone Scores")]
-    public RangeNode<float> FontSizeMultiplier { get; set; } = new RangeNode<float>(1.0f, 0.6, 2);
+    public RangeNode<double> FontSizeMultiplier { get; set; } = new RangeNode<double>(1.0, 0.5, 2);
 }
