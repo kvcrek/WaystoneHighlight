@@ -216,6 +216,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                     }
                 }
                 // Stats
+                // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
                 using (Graphics.SetTextScale(Settings.Graphics.QRFontSizeMultiplier)) {
                     Graphics.DrawText(iir.ToString(), new Vector2(bbox.Left + 2, bbox.Top));
                     Graphics.DrawText(iiq.ToString(), new Vector2(bbox.Left + 2, bbox.Top + 10));
@@ -226,12 +227,14 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 }
 
                 // Affixes count
+                 // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
                 using (Graphics.SetTextScale(Settings.Graphics.PrefSuffFontSizeMultiplier)) {
                     Graphics.DrawText(prefixCount.ToString(), new Vector2(bbox.Right + -18, bbox.Top));
                     Graphics.DrawText(suffixCount.ToString(), new Vector2(bbox.Right + -18, bbox.Top + 10));
                 }
 
                 // Score
+                 // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
                 using (Graphics.SetTextScale(Settings.Graphics.ScoreFontSizeMultiplier)) {
                     Graphics.DrawText(score.ToString(), new Vector2(bbox.Left + 2, bbox.Bottom - 15));
                 }
