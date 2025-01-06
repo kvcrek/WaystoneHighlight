@@ -77,7 +77,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                     continue;
 
                 // Check for map tier
-                if (item.Tier < Settings.MinimumTier)
+                if (item.Tier < Settings.Score.MinimumTier)
                 {
                     continue;
                 }
@@ -179,17 +179,17 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 }
 
                 // Sum the score
-                score += iiq * Settings.ScorePerQuantity;
-                score += iir * Settings.ScorePerRarity;
-                score += packSize * Settings.ScorePerPackSize;
-                score += magicPackSize * Settings.ScorePerMagicPackSize;
-                score += extraPacks * Settings.ScorePerExtraPacksPercent;
-                score += extraMagicPack * Settings.ScorePerExtraMagicPack;
-                score += extraRarePack * Settings.ScorePerExtraRarePack;
-                score += additionalPacks * Settings.ScorePerAdditionalPack;
+                score += iiq * Settings.Score.ScorePerQuantity;
+                score += iir * Settings.Score.ScorePerRarity;
+                score += packSize * Settings.Score.ScorePerPackSize;
+                score += magicPackSize * Settings.Score.ScorePerMagicPackSize;
+                score += extraPacks * Settings.Score.ScorePerExtraPacksPercent;
+                score += extraMagicPack * Settings.Score.ScorePerExtraMagicPack;
+                score += extraRarePack * Settings.Score.ScorePerExtraRarePack;
+                score += additionalPacks * Settings.Score.ScorePerAdditionalPack;
                 if (extraRareMod)
                 {
-                    score += Settings.ScoreForExtraRareMonsterModifier;
+                    score += Settings.Score.ScoreForExtraRareMonsterModifier;
                 }
 
 
@@ -198,20 +198,20 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 // Frame
                 if (hasBannedMod)
                 {
-                    Graphics.DrawFrame(bbox, BannedBorderColor, 1);
+                    Graphics.DrawFrame(bbox, Settings.Graphics.BannedBorderColor, 1);
                 }
                 else
                 {
-                    if (score >= Settings.MinimumRunHighlightScore)
+                    if (score >= Settings.Score.MinimumRunHighlightScore)
                     {
                         if (prefixCount < 3 && !IsCorrupted)
                         {
-                            Graphics.DrawFrame(bbox, CraftBorderColor, 2);
+                            Graphics.DrawFrame(bbox, Settings.Graphics.CraftBorderColor, 2);
 
                         }
                         else
                         {
-                            Graphics.DrawFrame(bbox, RunBorderColor, 1);
+                            Graphics.DrawFrame(bbox, Settings.Graphics.RunBorderColor, 1);
                         }
                     }
                 }
