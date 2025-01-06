@@ -219,24 +219,24 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
                 using (Graphics.SetTextScale(Settings.Graphics.QRFontSizeMultiplier)) {
                     Graphics.DrawText(iir.ToString(), new Vector2(bbox.Left + 2, bbox.Top));
-                    Graphics.DrawText(iiq.ToString(), new Vector2(bbox.Left + 2, bbox.Top + 10));
+                    Graphics.DrawText(iiq.ToString(), new Vector2(bbox.Left + 2, bbox.Top + 20));
                     if (extraRareMod)
                     {
-                        Graphics.DrawText("+1", new Vector2(bbox.Left + 2, bbox.Top + 20));
+                        Graphics.DrawText("+1", new Vector2(bbox.Left + 2, bbox.Top + 40));
                     }
                 }
 
                 // Affixes count
                  // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
                 using (Graphics.SetTextScale(Settings.Graphics.PrefSuffFontSizeMultiplier)) {
-                    Graphics.DrawText(prefixCount.ToString(), new Vector2(bbox.Right + -18, bbox.Top));
-                    Graphics.DrawText(suffixCount.ToString(), new Vector2(bbox.Right + -18, bbox.Top + 10));
+                    Graphics.DrawText(prefixCount.ToString(), new Vector2(bbox.Right + -25, bbox.Top));
+                    Graphics.DrawText(suffixCount.ToString(), new Vector2(bbox.Right + -25, bbox.Top + 20));
                 }
 
                 // Score
                  // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
                 using (Graphics.SetTextScale(Settings.Graphics.ScoreFontSizeMultiplier)) {
-                    Graphics.DrawText(score.ToString(), new Vector2(bbox.Left + 2, bbox.Bottom - 15));
+                    Graphics.DrawText(score.ToString(), new Vector2(bbox.Left + 2, bbox.Bottom + 25));
                 }
 
             }
