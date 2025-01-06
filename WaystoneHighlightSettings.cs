@@ -71,4 +71,13 @@ public class ScoreSettings
 [Submenu(CollapsedByDefault = false)]
 public class GraphicSettings
 {
-    
+   [Menu("Runnable Waystone Border Color", "Color of the Border of Runnable Waystones")]
+    public ColorNode RunBorderColor { get; set; } = new ColorNode(Color.Green);
+
+   [Menu("Craftable Waystone Border Color", "Color of the Border of Craftable Waystones")]
+    public ColorNode CraftBorderColor { get; set; } = new ColorNode(Color.Yellow);
+
+   [Menu("Banned Modifiers Waystone Border Color", "Color of the Border of Waystones with Banned Modifiers")]
+    public ColorNode BannedBorderColor { get; set; } = new ColorNode(Color.Red);
+
+}
