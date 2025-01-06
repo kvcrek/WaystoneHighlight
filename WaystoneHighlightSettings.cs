@@ -90,4 +90,7 @@ public class GraphicSettings
   
    [Menu("Banned Modifiers Waystone Border Thickness", "Thickness of the Border of Waystones with Banned Modifiers")]
     public RangeNode<int> BannedBorderThickness { get; set; } = new RangeNode<int>(1, 0, 5);
+
+   [Menu("Banned Modifiers Waystone Border Thickness", "Thickness of the Border of Waystones with Banned Modifiers")]
+    public RangeNode<float> FontSizeMultiplier { get; set; } = new RangeNode<float>(1.0f, 0, 5);
 }
