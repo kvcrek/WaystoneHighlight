@@ -83,11 +83,11 @@ public class GraphicSettings
     public ColorNode BannedBorderColor { get; set; } = new ColorNode(Color.Red);
 
    [Menu("Runnable Waystone Border Thickness", "Thickness of the Border of Runnable Waystones")]
-    public RangeNode<float> RunBorderThickness { get; set; } = new RangeNode<float>(1.0f, 0, 5);
+    public RangeNode<float> RunBorderThickness { get; set; } = new RangeNode<int>(1.0, 0, 5);
   
    [Menu("Craftable Waystone Border Thickness", "Thickness of the Border of Craftable Waystones")]
-    public RangeNode<float> CraftBorderThickness { get; set; } = new RangeNode<float>(1.0f, 0, 5);
+    public RangeNode<float> CraftBorderThickness { get; set; } = new RangeNode<int>(1.0, 0, 5);
   
    [Menu("Banned Modifiers Waystone Border Thickness", "Thickness of the Border of Waystones with Banned Modifiers")]
-    public RangeNode<float> BannedBorderThickness { get; set; } = new RangeNode<float>(1.0f, 0, 5);
+    public RangeNode<float> BannedBorderThickness { get; set; } = new RangeNode<int>(1.0, 0, 5);
 }
