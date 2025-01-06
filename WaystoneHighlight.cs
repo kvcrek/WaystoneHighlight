@@ -216,12 +216,13 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                     }
                 }
                 // Stats
-                using(Graphics.SetTextScale(Settings.Graphics.FontSizeMultiplier));
-                Graphics.DrawText(iir.ToString(), new Vector2(bbox.Left + 2, bbox.Top));
-                Graphics.DrawText(iiq.ToString(), new Vector2(bbox.Left + 2, bbox.Top + 10));
-                if (extraRareMod)
-                {
-                    Graphics.DrawText("+1", new Vector2(bbox.Left + 2, bbox.Top + 20));
+                using (Graphics.SetTextScale(Settings.Graphics.FontSizeMultiplier)) {
+                    Graphics.DrawText(iir.ToString(), new Vector2(bbox.Left + 2, bbox.Top));
+                    Graphics.DrawText(iiq.ToString(), new Vector2(bbox.Left + 2, bbox.Top + 10));
+                    if (extraRareMod)
+                    {
+                        Graphics.DrawText("+1", new Vector2(bbox.Left + 2, bbox.Top + 20));
+                    }
                 }
 
                 // Affixes count
