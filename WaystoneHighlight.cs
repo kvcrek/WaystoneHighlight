@@ -43,6 +43,8 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
         var stashPanelGuild = InGameState.IngameUi.GuildStashElement;
         var inventoryPanel = InGameState.IngameUi.InventoryPanel;
 
+        bool isQuadTab = false;
+
 
         // Run if inventory panel is opened
         if (inventoryPanel.IsVisible)
@@ -50,22 +52,27 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
             // Add stash items
             if (stashPanel.IsVisible && stashPanel.VisibleStash != null)
             {
+                if (stashPanel.VisibleStash.TotalBoxesInInventoryRow == 24)
+                {
+                    isQuadTab = true;
+                }
                 foreach (var item in stashPanel.VisibleStash.VisibleInventoryItems)
                 {
-                    waystones.Add(new WaystoneItem(item.Item.GetComponent<Base>(), item.Item.GetComponent<Map>(), item.Item.GetComponent<Mods>(), item.GetClientRectCache));
+                    waystones.Add(new WaystoneItem(item.Item.GetComponent<Base>(), item.Item.GetComponent<Map>(), item.Item.GetComponent<Mods>(), item.GetClientRectCache, ItemLocation.Stash));
                 }
-            } else if (stashPanelGuild.IsVisible && stashPanelGuild != null)
+            }
+            else if (stashPanelGuild.IsVisible && stashPanelGuild != null)
             {
                 foreach (var item in stashPanelGuild.VisibleStash.VisibleInventoryItems)
                 {
-                    waystones.Add(new WaystoneItem(item.Item.GetComponent<Base>(), item.Item.GetComponent<Map>(), item.Item.GetComponent<Mods>(), item.GetClientRectCache));
+                    waystones.Add(new WaystoneItem(item.Item.GetComponent<Base>(), item.Item.GetComponent<Map>(), item.Item.GetComponent<Mods>(), item.GetClientRectCache, ItemLocation.Stash));
                 }
             }
             // Add inventory items
             var inventoryItems = GameController.IngameState.ServerData.PlayerInventories[0].Inventory.InventorySlotItems;
             foreach (var item in inventoryItems)
             {
-                waystones.Add(new(item.Item.GetComponent<Base>(), item.Item.GetComponent<Map>(), item.Item.GetComponent<Mods>(), item.GetClientRect()));
+                waystones.Add(new(item.Item.GetComponent<Base>(), item.Item.GetComponent<Map>(), item.Item.GetComponent<Mods>(), item.GetClientRect(), ItemLocation.Inventory));
             }
 
             foreach (var waystone in waystones)
@@ -167,7 +174,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                             if (mod.Values.Count != 1)
                             {
                                 extraMagicPack += mod.Values[1];
-                            } 
+                            }
                             break;
                         case "MapRarePackIncrease":
                             extraRarePack += mod.Values[0];
@@ -215,28 +222,36 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                         }
                     }
                 }
-                // Stats
-                // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
-                using (Graphics.SetTextScale(Settings.Graphics.QRFontSizeMultiplier)) {
-                    Graphics.DrawText(iir.ToString(), new Vector2(bbox.Left + 5, bbox.Top), ExileCore2.Shared.Enums.FontAlign.Left);
-                    Graphics.DrawText(iiq.ToString(), new Vector2(bbox.Left + 5, bbox.Top + 2 + (10 * Settings.Graphics.QRFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Left);
-                    if (extraRareMod)
+
+                if (waystone.location == ItemLocation.Inventory || (waystone.location == ItemLocation.Stash && !isQuadTab))
+                {
+
+                    // Stats
+                    // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
+                    using (Graphics.SetTextScale(Settings.Graphics.QRFontSizeMultiplier))
                     {
-                        Graphics.DrawText("+1", new Vector2(bbox.Left + 5, bbox.Top + 4 + (20 * Settings.Graphics.QRFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Left);
+                        Graphics.DrawText(iir.ToString(), new Vector2(bbox.Left + 5, bbox.Top), ExileCore2.Shared.Enums.FontAlign.Left);
+                        Graphics.DrawText(iiq.ToString(), new Vector2(bbox.Left + 5, bbox.Top + 2 + (10 * Settings.Graphics.QRFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Left);
+                        if (extraRareMod)
+                        {
+                            Graphics.DrawText("+1", new Vector2(bbox.Left + 5, bbox.Top + 4 + (20 * Settings.Graphics.QRFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Left);
+                        }
                     }
-                }
 
-                // Affixes count
-                 // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
-                using (Graphics.SetTextScale(Settings.Graphics.PrefSuffFontSizeMultiplier)) {
-                    Graphics.DrawText(prefixCount.ToString(), new Vector2(bbox.Right - 5, bbox.Top), ExileCore2.Shared.Enums.FontAlign.Right);
-                    Graphics.DrawText(suffixCount.ToString(), new Vector2(bbox.Right - 5, bbox.Top + 2 + (10 * Settings.Graphics.PrefSuffFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Right);
-                }
+                    // Affixes count
+                    // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
+                    using (Graphics.SetTextScale(Settings.Graphics.PrefSuffFontSizeMultiplier))
+                    {
+                        Graphics.DrawText(prefixCount.ToString(), new Vector2(bbox.Right - 5, bbox.Top), ExileCore2.Shared.Enums.FontAlign.Right);
+                        Graphics.DrawText(suffixCount.ToString(), new Vector2(bbox.Right - 5, bbox.Top + 2 + (10 * Settings.Graphics.PrefSuffFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Right);
+                    }
 
-                // Score
-                 // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
-                using (Graphics.SetTextScale(Settings.Graphics.ScoreFontSizeMultiplier)) {
-                    Graphics.DrawText(score.ToString(), new Vector2(bbox.Left + 5, bbox.Bottom - 5 - (15 * Settings.Graphics.ScoreFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Left);
+                    // Score
+                    // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
+                    using (Graphics.SetTextScale(Settings.Graphics.ScoreFontSizeMultiplier))
+                    {
+                        Graphics.DrawText(score.ToString(), new Vector2(bbox.Left + 5, bbox.Bottom - 5 - (15 * Settings.Graphics.ScoreFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Left);
+                    }
                 }
 
             }

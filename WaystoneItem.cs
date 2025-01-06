@@ -8,11 +8,17 @@ using ExileCore2.Shared;
 
 namespace WaystoneHighlight
 {
-    internal struct WaystoneItem(Base baseComponent, Map mapComponent, Mods modsComponent, RectangleF rectangleF)
+    internal enum ItemLocation
+    {
+        Inventory = 0,
+        Stash = 1
+    }
+    internal struct WaystoneItem(Base baseComponent, Map mapComponent, Mods modsComponent, RectangleF rectangleF, ItemLocation location)
     {
         public Base baseComponent = baseComponent;
         public Map map = mapComponent;
         public Mods mods = modsComponent;
         public RectangleF rect = rectangleF;
+        public ItemLocation location = location;
     }
 }
