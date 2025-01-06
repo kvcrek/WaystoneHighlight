@@ -98,5 +98,5 @@ public class GraphicSettings
     public RangeNode<float> ScoreFontSizeMultiplier { get; set; } = new RangeNode<float>(1.0f, 0.5f, 2f);
 
   [Menu("Waystone Quantity+Rarity Font Size", "Size of the global font for Waystone Scores")]
-    public RangeNode<float> PrefSuffSizeMultiplier { get; set; } = new RangeNode<float>(1.0f, 0.5f, 2f);
+    public RangeNode<float> PrefSuffFontSizeMultiplier { get; set; } = new RangeNode<float>(1.0f, 0.5f, 2f);
 }
