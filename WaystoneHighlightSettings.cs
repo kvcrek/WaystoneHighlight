@@ -8,6 +8,19 @@ namespace WaystoneHighlight;
 
 public class WaystoneHighlightSettings : ISettings
 {
+  public ToggleNode Enable { get; set; } = new ToggleNode(false);
+
+    [Menu("Score Features")]
+    public ScoreSettings Score { get; set; } = new ScoreSettings();
+    
+    [Menu("Graphics, Colors, and Performance Settings")]    
+    public GraphicSettings Graphics { get; set; } = new GraphicSettings();
+}
+
+
+[Submenu(CollapsedByDefault = false)]
+public class ScoreSettings
+{
     //Mandatory setting to allow enabling/disabling your plugin
     public ToggleNode Enable { get; set; } = new ToggleNode(false);
 
@@ -54,3 +67,8 @@ public class WaystoneHighlightSettings : ISettings
     public ButtonNode ReloadBannedModifiers { get; set; } = new ButtonNode();
 
 }
+
+[Submenu(CollapsedByDefault = false)]
+public class GraphicSettings
+{
+    
