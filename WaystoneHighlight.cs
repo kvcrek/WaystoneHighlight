@@ -20,19 +20,17 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
 
     private void ParseBannedModifiers()
     {
-        BannedModifiers = Settings.BannedModifiers.Value
+        BannedModifiers = Settings.Score.BannedModifiers.Value
             .Split(',')
             .Select(x => x.Trim().ToLower())
             .Where(x => !string.IsNullOrWhiteSpace(x))
             .ToList();
-
-
     }
 
     public override bool Initialise()
     {
         //BannedModifiers = ParseBannedModifiers();
-        Settings.ReloadBannedModifiers.OnPressed = ParseBannedModifiers;
+        Settings.Score.ReloadBannedModifiers.OnPressed = ParseBannedModifiers;
         ParseBannedModifiers();
         return base.Initialise();
     }
