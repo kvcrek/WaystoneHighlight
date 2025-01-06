@@ -204,7 +204,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 {
                     if (score >= Settings.Score.MinimumRunHighlightScore)
                     {
-                        if (prefixCount < 3 && !IsCorrupted)
+                        if (prefixCount < 3 && !isCorrupted)
                         {
                             Graphics.DrawFrame(bbox, Settings.Graphics.CraftBorderColor, 2);
 
