@@ -85,13 +85,13 @@ public class GraphicSettings
 
 //BORDER THICKNESS
    [Menu("Runnable Waystone Border Thickness", "Thickness of the Border of Runnable Waystones")]
-    public RangeNode<int> RunBorderThickness { get; set; } = new RangeNode<int>(1, 0, 5);
+    public RangeNode<int> RunBorderThickness { get; set; } = new RangeNode<int>(1, 1, 5);
   
    [Menu("Craftable Waystone Border Thickness", "Thickness of the Border of Craftable Waystones")]
-    public RangeNode<int> CraftBorderThickness { get; set; } = new RangeNode<int>(1, 0, 5);
+    public RangeNode<int> CraftBorderThickness { get; set; } = new RangeNode<int>(1, 1, 5);
   
    [Menu("Banned Modifiers Waystone Border Thickness", "Thickness of the Border of Waystones with Banned Modifiers")]
-    public RangeNode<int> BannedBorderThickness { get; set; } = new RangeNode<int>(1, 0, 5);
+    public RangeNode<int> BannedBorderThickness { get; set; } = new RangeNode<int>(1, 1, 5);
 
 
 //FONT SIZE (Needs modifications as text scales from origin point and doesn't change position accordingly)
