@@ -198,7 +198,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 // Frame
                 if (hasBannedMod)
                 {
-                    Graphics.DrawFrame(bbox, Settings.Graphics.BannedBorderColor, 1);
+                    Graphics.DrawFrame(bbox, Settings.Graphics.BannedBorderColor, Settings.Graphics.BannedBorderThickness);
                 }
                 else
                 {
@@ -206,12 +206,12 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                     {
                         if (prefixCount < 3 && !isCorrupted)
                         {
-                            Graphics.DrawFrame(bbox, Settings.Graphics.CraftBorderColor, 2);
+                            Graphics.DrawFrame(bbox, Settings.Graphics.CraftBorderColor, Settings.Graphics.CraftBorderThickness);
 
                         }
                         else
                         {
-                            Graphics.DrawFrame(bbox, Settings.Graphics.RunBorderColor, 1);
+                            Graphics.DrawFrame(bbox, Settings.Graphics.RunBorderColor, Settings.Graphics.RunBorderThickness);
                         }
                     }
                 }
