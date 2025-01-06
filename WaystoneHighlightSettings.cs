@@ -91,6 +91,12 @@ public class GraphicSettings
    [Menu("Banned Modifiers Waystone Border Thickness", "Thickness of the Border of Waystones with Banned Modifiers")]
     public RangeNode<int> BannedBorderThickness { get; set; } = new RangeNode<int>(1, 0, 5);
 
-   [Menu("Waystone Score Font Size", "Size of the global font for Waystone Scores")]
-    public RangeNode<float> FontSizeMultiplier { get; set; } = new RangeNode<float>(1.0f, 0.5f, 2f);
+   [Menu("Waystone Quantity+Rarity Font Size", "Size of the global font for Waystone Scores")]
+    public RangeNode<float> QRFontSizeMultiplierQR { get; set; } = new RangeNode<float>(1.0f, 0.5f, 2f);
+
+  [Menu("Waystone Score Font Size", "Size of the global font for Waystone Scores")]
+    public RangeNode<float> ScoreFontSizeMultiplier { get; set; } = new RangeNode<float>(1.0f, 0.5f, 2f);
+
+  [Menu("Waystone Quantity+Rarity Font Size", "Size of the global font for Waystone Scores")]
+    public RangeNode<float> PrefSuffSizeMultiplierQR { get; set; } = new RangeNode<float>(1.0f, 0.5f, 2f);
 }
