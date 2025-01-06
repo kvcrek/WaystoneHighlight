@@ -1,4 +1,6 @@
 ﻿using System.Windows.Forms;
+using System.Drawing;
+using ExileCore2;
 using ExileCore2.Shared.Attributes;
 using ExileCore2.Shared.Interfaces;
 using ExileCore2.Shared.Nodes;
@@ -7,6 +9,19 @@ using Newtonsoft.Json;
 namespace WaystoneHighlight;
 
 public class WaystoneHighlightSettings : ISettings
+{
+  public ToggleNode Enable { get; set; } = new ToggleNode(false);
+
+    [Menu("Score Features")]
+    public ScoreSettings Score { get; set; } = new ScoreSettings();
+    
+    [Menu("Graphics, Colors, and Font Settings")]    
+    public GraphicSettings Graphics { get; set; } = new GraphicSettings();
+}
+
+
+[Submenu(CollapsedByDefault = false)]
+public class ScoreSettings
 {
     //Mandatory setting to allow enabling/disabling your plugin
     public ToggleNode Enable { get; set; } = new ToggleNode(false);
@@ -53,4 +68,39 @@ public class WaystoneHighlightSettings : ISettings
     [JsonIgnore]
     public ButtonNode ReloadBannedModifiers { get; set; } = new ButtonNode();
 
+}
+
+[Submenu(CollapsedByDefault = false)]
+public class GraphicSettings
+{
+//BORDER COLOR
+   [Menu("Runnable Waystone Border Color", "Color of the Border of Runnable Waystones")]
+    public ColorNode RunBorderColor { get; set; } = new ColorNode(Color.Green);
+
+   [Menu("Craftable Waystone Border Color", "Color of the Border of Craftable Waystones")]
+    public ColorNode CraftBorderColor { get; set; } = new ColorNode(Color.Yellow);
+
+   [Menu("Banned Modifiers Waystone Border Color", "Color of the Border of Waystones with Banned Modifiers")]
+    public ColorNode BannedBorderColor { get; set; } = new ColorNode(Color.Red);
+
+//BORDER THICKNESS
+   [Menu("Runnable Waystone Border Thickness", "Thickness of the Border of Runnable Waystones")]
+    public RangeNode<int> RunBorderThickness { get; set; } = new RangeNode<int>(1, 1, 5);
+  
+   [Menu("Craftable Waystone Border Thickness", "Thickness of the Border of Craftable Waystones")]
+    public RangeNode<int> CraftBorderThickness { get; set; } = new RangeNode<int>(1, 1, 5);
+  
+   [Menu("Banned Modifiers Waystone Border Thickness", "Thickness of the Border of Waystones with Banned Modifiers")]
+    public RangeNode<int> BannedBorderThickness { get; set; } = new RangeNode<int>(1, 1, 5);
+
+
+//FONT SIZE (Needs modifications as text scales from origin point and doesn't change position accordingly)
+   [Menu("Waystone Quantity+Rarity Font Size", "Size of the global font for Waystone Scores")]
+    public RangeNode<float> QRFontSizeMultiplier { get; set; } = new RangeNode<float>(1.0f, 0.5f, 2f);
+
+  [Menu("Waystone Score Font Size", "Size of the global font for Waystone Scores")]
+    public RangeNode<float> ScoreFontSizeMultiplier { get; set; } = new RangeNode<float>(1.0f, 0.5f, 2f);
+
+  [Menu("Waystone Quantity+Rarity Font Size", "Size of the global font for Waystone Scores")]
+    public RangeNode<float> PrefSuffFontSizeMultiplier { get; set; } = new RangeNode<float>(1.0f, 0.5f, 2f);
 }

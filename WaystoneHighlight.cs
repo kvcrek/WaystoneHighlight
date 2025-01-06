@@ -20,19 +20,17 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
 
     private void ParseBannedModifiers()
     {
-        BannedModifiers = Settings.BannedModifiers.Value
+        BannedModifiers = Settings.Score.BannedModifiers.Value
             .Split(',')
             .Select(x => x.Trim().ToLower())
             .Where(x => !string.IsNullOrWhiteSpace(x))
             .ToList();
-
-
     }
 
     public override bool Initialise()
     {
         //BannedModifiers = ParseBannedModifiers();
-        Settings.ReloadBannedModifiers.OnPressed = ParseBannedModifiers;
+        Settings.Score.ReloadBannedModifiers.OnPressed = ParseBannedModifiers;
         ParseBannedModifiers();
         return base.Initialise();
     }
@@ -79,7 +77,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                     continue;
 
                 // Check for map tier
-                if (item.Tier < Settings.MinimumTier)
+                if (item.Tier < Settings.Score.MinimumTier)
                 {
                     continue;
                 }
@@ -181,17 +179,17 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 }
 
                 // Sum the score
-                score += iiq * Settings.ScorePerQuantity;
-                score += iir * Settings.ScorePerRarity;
-                score += packSize * Settings.ScorePerPackSize;
-                score += magicPackSize * Settings.ScorePerMagicPackSize;
-                score += extraPacks * Settings.ScorePerExtraPacksPercent;
-                score += extraMagicPack * Settings.ScorePerExtraMagicPack;
-                score += extraRarePack * Settings.ScorePerExtraRarePack;
-                score += additionalPacks * Settings.ScorePerAdditionalPack;
+                score += iiq * Settings.Score.ScorePerQuantity;
+                score += iir * Settings.Score.ScorePerRarity;
+                score += packSize * Settings.Score.ScorePerPackSize;
+                score += magicPackSize * Settings.Score.ScorePerMagicPackSize;
+                score += extraPacks * Settings.Score.ScorePerExtraPacksPercent;
+                score += extraMagicPack * Settings.Score.ScorePerExtraMagicPack;
+                score += extraRarePack * Settings.Score.ScorePerExtraRarePack;
+                score += additionalPacks * Settings.Score.ScorePerAdditionalPack;
                 if (extraRareMod)
                 {
-                    score += Settings.ScoreForExtraRareMonsterModifier;
+                    score += Settings.Score.ScoreForExtraRareMonsterModifier;
                 }
 
 
@@ -200,45 +198,46 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 // Frame
                 if (hasBannedMod)
                 {
-                    Graphics.DrawFrame(bbox, Color.DarkRed, 1);
+                    Graphics.DrawFrame(bbox, Settings.Graphics.BannedBorderColor, Settings.Graphics.BannedBorderThickness.Value);
                 }
                 else
                 {
-                    if (score >= Settings.MinimumRunHighlightScore)
+                    if (score >= Settings.Score.MinimumRunHighlightScore)
                     {
-                        if (prefixCount < 3)
+                        if (prefixCount < 3 && !isCorrupted)
                         {
-                            Graphics.DrawFrame(bbox, Color.Green, 2);
+                            Graphics.DrawFrame(bbox, Settings.Graphics.CraftBorderColor, Settings.Graphics.CraftBorderThickness.Value);
 
                         }
                         else
                         {
-                            Graphics.DrawFrame(bbox, Color.LightGreen, 1);
-                        }
-                    }
-                    else if (score >= Settings.MinimumCraftHighlightScore && !isCorrupted)
-                    {
-                        if (prefixCount < 3)
-                        {
-                            Graphics.DrawFrame(bbox, Color.Yellow, 2);
-
+                            Graphics.DrawFrame(bbox, Settings.Graphics.RunBorderColor, Settings.Graphics.RunBorderThickness.Value);
                         }
                     }
                 }
                 // Stats
-                Graphics.DrawText(iir.ToString(), new Vector2(bbox.Left + 2, bbox.Top));
-                Graphics.DrawText(iiq.ToString(), new Vector2(bbox.Left + 2, bbox.Top + 10));
-                if (extraRareMod)
-                {
-                    Graphics.DrawText("+1", new Vector2(bbox.Left + 2, bbox.Top + 20));
+                // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
+                using (Graphics.SetTextScale(Settings.Graphics.QRFontSizeMultiplier)) {
+                    Graphics.DrawText(iir.ToString(), new Vector2(bbox.Left + 2, bbox.Top));
+                    Graphics.DrawText(iiq.ToString(), new Vector2(bbox.Left + 2, bbox.Top + 10));
+                    if (extraRareMod)
+                    {
+                        Graphics.DrawText("+1", new Vector2(bbox.Left + 2, bbox.Top + 20));
+                    }
                 }
 
                 // Affixes count
-                Graphics.DrawText(prefixCount.ToString(), new Vector2(bbox.Right + -18, bbox.Top));
-                Graphics.DrawText(suffixCount.ToString(), new Vector2(bbox.Right + -18, bbox.Top + 10));
+                 // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
+                using (Graphics.SetTextScale(Settings.Graphics.PrefSuffFontSizeMultiplier)) {
+                    Graphics.DrawText(prefixCount.ToString(), new Vector2(bbox.Right + -18, bbox.Top));
+                    Graphics.DrawText(suffixCount.ToString(), new Vector2(bbox.Right + -18, bbox.Top + 10));
+                }
 
                 // Score
-                Graphics.DrawText(score.ToString(), new Vector2(bbox.Left + 2, bbox.Bottom - 15));
+                 // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
+                using (Graphics.SetTextScale(Settings.Graphics.ScoreFontSizeMultiplier)) {
+                    Graphics.DrawText(score.ToString(), new Vector2(bbox.Left + 2, bbox.Bottom - 15));
+                }
 
             }
         }
