@@ -101,6 +101,6 @@ public class GraphicSettings
   [Menu("Waystone Score Font Size", "Size of the global font for Waystone Scores")]
     public RangeNode<float> ScoreFontSizeMultiplier { get; set; } = new RangeNode<float>(1.0f, 0.5f, 2f);
 
-  [Menu("Waystone Quantity+Rarity Font Size", "Size of the global font for Waystone Scores")]
+  [Menu("Waystone Prefix+Suffix Font Size", "Size of the global font for Affix Count")]
     public RangeNode<float> PrefSuffFontSizeMultiplier { get; set; } = new RangeNode<float>(1.0f, 0.5f, 2f);
 }
