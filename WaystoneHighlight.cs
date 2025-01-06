@@ -216,7 +216,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                     }
                 }
                 // Stats
-                Graphics.SetTextScale(Settings.Graphics.FontSizeMultiplier.Value);
+                Graphics.SetTextScale(Settings.Graphics.FontSizeMultiplier);
                 Graphics.DrawText(iir.ToString(), new Vector2(bbox.Left + 2, bbox.Top));
                 Graphics.DrawText(iiq.ToString(), new Vector2(bbox.Left + 2, bbox.Top + 10));
                 if (extraRareMod)
