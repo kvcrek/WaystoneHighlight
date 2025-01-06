@@ -200,28 +200,20 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 // Frame
                 if (hasBannedMod)
                 {
-                    Graphics.DrawFrame(bbox, Color.DarkRed, 1);
+                    Graphics.DrawFrame(bbox, BannedBorderColor, 1);
                 }
                 else
                 {
                     if (score >= Settings.MinimumRunHighlightScore)
                     {
-                        if (prefixCount < 3)
+                        if (prefixCount < 3 && !IsCorrupted)
                         {
-                            Graphics.DrawFrame(bbox, Color.Green, 2);
+                            Graphics.DrawFrame(bbox, CraftBorderColor, 2);
 
                         }
                         else
                         {
-                            Graphics.DrawFrame(bbox, Color.LightGreen, 1);
-                        }
-                    }
-                    else if (score >= Settings.MinimumCraftHighlightScore && !isCorrupted)
-                    {
-                        if (prefixCount < 3)
-                        {
-                            Graphics.DrawFrame(bbox, Color.Yellow, 2);
-
+                            Graphics.DrawFrame(bbox, RunBorderColor, 1);
                         }
                     }
                 }
