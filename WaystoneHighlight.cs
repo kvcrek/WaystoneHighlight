@@ -63,11 +63,15 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
             }
             else if (stashPanelGuild.IsVisible && stashPanelGuild != null)
             {
+                if (stashPanelGuild.VisibleStash.TotalBoxesInInventoryRow == 24)
+                {
+                    isQuadTab = true;
+                }
                 foreach (var item in stashPanelGuild.VisibleStash.VisibleInventoryItems)
                 {
                     waystones.Add(new WaystoneItem(item.Item.GetComponent<Base>(), item.Item.GetComponent<Map>(), item.Item.GetComponent<Mods>(), item.GetClientRectCache, ItemLocation.Stash));
                 }
-            }
+            } 
             // Add inventory items
             var inventoryItems = GameController.IngameState.ServerData.PlayerInventories[0].Inventory.InventorySlotItems;
             foreach (var item in inventoryItems)
