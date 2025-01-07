@@ -10,6 +10,8 @@ using System.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
+using RectangleF = ExileCore2.Shared.RectangleF;
+using ExileCore2.Shared.Nodes;
 
 
 namespace WaystoneHighlight;
@@ -210,7 +212,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 // Frame
                 if (hasBannedMod)
                 {
-                    Graphics.DrawFrame(bbox, Settings.Graphics.BannedBorderColor, Settings.Graphics.BannedBorderThickness.Value);
+                    DrawBorderHighlight(bbox, Settings.Graphics.BannedBorderColor, Settings.Graphics.BannedBorderThickness.Value);
                 }
                 else
                 {
@@ -218,12 +220,12 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                     {
                         if (prefixCount < 3 && !isCorrupted)
                         {
-                            Graphics.DrawFrame(bbox, Settings.Graphics.CraftBorderColor, Settings.Graphics.CraftBorderThickness.Value);
+                            DrawBorderHighlight(bbox, Settings.Graphics.CraftBorderColor, Settings.Graphics.CraftBorderThickness.Value);
 
                         }
                         else if (score >= Settings.Score.MinimumRunHighlightScore)
                         {
-                            Graphics.DrawFrame(bbox, Settings.Graphics.RunBorderColor, Settings.Graphics.RunBorderThickness.Value);
+                            DrawBorderHighlight(bbox, Settings.Graphics.RunBorderColor, Settings.Graphics.RunBorderThickness.Value);
                         }
                     }
                 }
@@ -261,6 +263,15 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
 
             }
         }
+    }
+    private void DrawBorderHighlight(RectangleF rect, ColorNode color, int thickness) {
+        int scale = thickness - 1;
+        int innerX = (int)rect.X + 1 + (int)(0.5 * scale);
+        int innerY = (int)rect.Y + 1 + (int)(0.5 * scale);
+        int innerWidth = (int)rect.Width - 1 - scale;
+        int innerHeight = (int)rect.Height - 1 - scale;
+        RectangleF scaledFrame = new RectangleF(innerX, innerY, innerWidth, innerHeight);
+        Graphics.DrawFrame(scaledFrame, color, thickness);
     }
 
 
