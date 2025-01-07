@@ -212,20 +212,44 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 // Frame
                 if (hasBannedMod)
                 {
-                    DrawBorderHighlight(bbox, Settings.Graphics.BannedBorderColor, Settings.Graphics.BannedBorderThickness.Value);
-                }
+                    switch (Settings.Graphics.BannedHightlightStyle) 
+                    {
+                        case 1:
+                            DrawBorderHighlight(bbox, Settings.Graphics.BannedHighlightColor, Settings.Graphics.BorderHighlight.BannedBorderThickness);
+                            break;
+                        case 2:
+                            DrawBoxHighlight(bbox, Settings.Graphics.BannedHighlightColor, Settings.Graphics.BoxHighlight.BannedBoxRounding.Value);
+                            break;
+                    }
+                } 
                 else
                 {
                     if (score >= Settings.Score.MinimumCraftHighlightScore)
                     {
                         if (prefixCount < 3 && !isCorrupted)
                         {
-                            DrawBorderHighlight(bbox, Settings.Graphics.CraftBorderColor, Settings.Graphics.CraftBorderThickness.Value);
+                            switch (Settings.Graphics.CraftHightlightStyle)
+                            {
+                                case 1:
+                                    DrawBorderHighlight(bbox, Settings.Graphics.CraftHighlightColor, Settings.Graphics.BorderHighlight.CraftBorderThickness.Value);
+                                    break;
+                                case 2:
+                                    DrawBoxHighlight(bbox, Settings.Graphics.CraftHighlightColor, Settings.Graphics.BoxHighlight.CraftBoxRounding.Value);
+                                    break;
+                            }
 
                         }
                         else if (score >= Settings.Score.MinimumRunHighlightScore)
                         {
-                            DrawBorderHighlight(bbox, Settings.Graphics.RunBorderColor, Settings.Graphics.RunBorderThickness.Value);
+                            switch (Settings.Graphics.RunHightlightStyle) 
+                            {
+                                case 1:
+                                    DrawBorderHighlight(bbox, Settings.Graphics.RunHighlightColor, Settings.Graphics.BorderHighlight.RunBorderThickness.Value);
+                                    break;
+                                case 2:
+                                    DrawBoxHighlight(bbox, Settings.Graphics.RunHighlightColor, Settings.Graphics.BoxHighlight.RunBoxRounding.Value);
+                                    break;
+                            }
                         }
                     }
                 }
@@ -235,36 +259,38 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
 
                     // Stats
                     // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
-                    using (Graphics.SetTextScale(Settings.Graphics.QRFontSizeMultiplier))
+                    using (Graphics.SetTextScale(Settings.Graphics.FontSize.QRFontSizeMultiplier))
                     {
                         Graphics.DrawText(iir.ToString(), new Vector2(bbox.Left + 5, bbox.Top), ExileCore2.Shared.Enums.FontAlign.Left);
-                        Graphics.DrawText(iiq.ToString(), new Vector2(bbox.Left + 5, bbox.Top + 2 + (10 * Settings.Graphics.QRFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Left);
+                        Graphics.DrawText(iiq.ToString(), new Vector2(bbox.Left + 5, bbox.Top + 2 + (10 * Settings.Graphics.FontSize.QRFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Left);
                         if (extraRareMod)
                         {
-                            Graphics.DrawText("+1", new Vector2(bbox.Left + 5, bbox.Top + 4 + (20 * Settings.Graphics.QRFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Left);
+                            Graphics.DrawText("+1", new Vector2(bbox.Left + 5, bbox.Top + 4 + (20 * Settings.Graphics.FontSize.QRFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Left);
                         }
                     }
 
                     // Affixes count
                     // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
-                    using (Graphics.SetTextScale(Settings.Graphics.PrefSuffFontSizeMultiplier))
+                    using (Graphics.SetTextScale(Settings.Graphics.FontSize.PrefSuffFontSizeMultiplier))
                     {
                         Graphics.DrawText(prefixCount.ToString(), new Vector2(bbox.Right - 5, bbox.Top), ExileCore2.Shared.Enums.FontAlign.Right);
-                        Graphics.DrawText(suffixCount.ToString(), new Vector2(bbox.Right - 5, bbox.Top + 2 + (10 * Settings.Graphics.PrefSuffFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Right);
+                        Graphics.DrawText(suffixCount.ToString(), new Vector2(bbox.Right - 5, bbox.Top + 2 + (10 * Settings.Graphics.FontSize.PrefSuffFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Right);
                     }
 
                     // Score
                     // SetTextScale doesn't scale well we need to change origin point or add x:y placement modifications depending on scale
-                    using (Graphics.SetTextScale(Settings.Graphics.ScoreFontSizeMultiplier))
+                    using (Graphics.SetTextScale(Settings.Graphics.FontSize.ScoreFontSizeMultiplier))
                     {
-                        Graphics.DrawText(score.ToString(), new Vector2(bbox.Left + 5, bbox.Bottom - 5 - (15 * Settings.Graphics.ScoreFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Left);
+                        Graphics.DrawText(score.ToString(), new Vector2(bbox.Left + 5, bbox.Bottom - 5 - (15 * Settings.Graphics.FontSize.ScoreFontSizeMultiplier)), ExileCore2.Shared.Enums.FontAlign.Left);
                     }
                 }
 
             }
         }
     }
-    private void DrawBorderHighlight(RectangleF rect, ColorNode color, int thickness) {
+
+    private void DrawBorderHighlight(RectangleF rect, ColorNode color, int thickness)
+    {
         int scale = thickness - 1;
         int innerX = (int)rect.X + 1 + (int)(0.5 * scale);
         int innerY = (int)rect.Y + 1 + (int)(0.5 * scale);
@@ -274,5 +300,13 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
         Graphics.DrawFrame(scaledFrame, color, thickness);
     }
 
-
+    private void DrawBoxHighlight(RectangleF rect, ColorNode color, int rounding)
+    {
+        int innerX = (int)rect.X + 1 + (int)(0.5 * rounding);
+        int innerY = (int)rect.Y + 1 + (int)(0.5 * rounding);
+        int innerWidth = (int)rect.Width - 1 - rounding;
+        int innerHeight = (int)rect.Height - 1 - rounding;
+        RectangleF scaledBox = new RectangleF(innerX, innerY, innerWidth, innerHeight);
+        Graphics.DrawBox(scaledBox, color, rounding);
+    }
 }
