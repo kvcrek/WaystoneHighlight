@@ -9,6 +9,7 @@ using System.Numerics;
 using System.Drawing;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 
 
 namespace WaystoneHighlight;
@@ -213,14 +214,14 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 }
                 else
                 {
-                    if (score >= Settings.Score.MinimumRunHighlightScore)
+                    if (score >= Settings.Score.MinimumCraftHighlightScore)
                     {
                         if (prefixCount < 3 && !isCorrupted)
                         {
                             Graphics.DrawFrame(bbox, Settings.Graphics.CraftBorderColor, Settings.Graphics.CraftBorderThickness.Value);
 
                         }
-                        else
+                        else if (score >= Settings.Score.MinimumRunHighlightScore)
                         {
                             Graphics.DrawFrame(bbox, Settings.Graphics.RunBorderColor, Settings.Graphics.RunBorderThickness.Value);
                         }
