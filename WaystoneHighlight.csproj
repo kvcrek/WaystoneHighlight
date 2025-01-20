@@ -21,6 +21,10 @@
       <HintPath>$(exapiPackage)\GameOffsets2.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="ItemFilterLibrary">
+      <HintPath>$(exapiPackage)\ItemFilterLibrary.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

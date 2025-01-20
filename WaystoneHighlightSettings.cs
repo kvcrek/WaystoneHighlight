@@ -32,6 +32,9 @@ public class ScoreSettings
     [Menu("Minimum score to highlight map for crafting")]
     public RangeNode<int> MinimumCraftHighlightScore { get; set; } = new RangeNode<int>(30, 0, 1000);
 
+    [Menu("Minimum score to highlight map for crafting (above rare)", "Minimum score to highlight map for crafting when prefix count is 3 or more and item is not corrupted")]
+    public RangeNode<int> MinimumCraftHighlightScoreAboveRare { get; set; } = new RangeNode<int>(50, 0, 1000);
+
     [Menu("Minimum score to highlight map for running")]
     public RangeNode<int> MinimumRunHighlightScore { get; set; } = new RangeNode<int>(160, 0, 1000);
 
