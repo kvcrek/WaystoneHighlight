@@ -82,8 +82,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                                 modsComponent.ExplicitMods,
                                 modsComponent.CorruptionImplicitMods,
                                 modsComponent.ImplicitMods,
-                                modsComponent.SynthesisMods,
-                                modsComponent.CrucibleMods
+                                modsComponent.SynthesisMods
                             );
                             waystones.Add(new WaystoneItem(
                                 item.Item.GetComponent<Base>(),
@@ -114,7 +113,6 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                         {
                             var modsData = new ModsData(
                                 modsComponent.ItemMods,
-                                null,
                                 null,
                                 null,
                                 null,
@@ -152,8 +150,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                                 modsComponent.ExplicitMods,
                                 modsComponent.CorruptionImplicitMods,
                                 modsComponent.ImplicitMods,
-                                modsComponent.SynthesisMods,
-                                modsComponent.CrucibleMods
+                                modsComponent.SynthesisMods
                             );
                             waystones.Add(new WaystoneItem(
                                 item.Item.GetComponent<Base>(),
@@ -189,7 +186,6 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 var itemMods = waystone.mods;
                 var bbox = waystone.rect;
 
-                // 改进点：OpenPrefixCount / OpenSuffixCount 如果出现 -1，则直接用 ModsData.Prefixes.Count / ModsData.Suffixes.Count
                 int prefixCount = waystone.modsData.Prefixes?.Count() ?? 0;
                 int suffixCount = waystone.modsData.Suffixes?.Count() ?? 0;
 
@@ -298,19 +294,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 } 
                 else
                 {
-                    if (score >= Settings.Score.MinimumCraftHighlightScoreAboveRare && isRare && prefixCount < 3 && !isCorrupted)
-                    {
-                        switch (Settings.Graphics.CraftHightlightStyle)
-                        {
-                            case 1:
-                                DrawBorderHighlight(bbox, Settings.Graphics.CraftHighlightColor, Settings.Graphics.BorderHighlight.CraftBorderThickness.Value);
-                                break;
-                            case 2:
-                                DrawBoxHighlight(bbox, Settings.Graphics.CraftHighlightColor, Settings.Graphics.BoxHighlight.CraftBoxRounding.Value);
-                                break;
-                        }
-                    }
-                    else if (score >= Settings.Score.MinimumCraftHighlightScore && !isRare && !isCorrupted)
+                    if (score >= Settings.Score.MinimumCraftHighlightScore && !isCorrupted && prefixCount < 3)
                     {
                         switch (Settings.Graphics.CraftHightlightStyle)
                         {
@@ -373,7 +357,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
 
     private void DrawBorderHighlight(RectangleF rect, ColorNode color, int thickness)
     {
-        if (rect == null || color == null) return;
+        if (color == null) return;
         int scale = thickness - 1;
         int innerX = (int)rect.X + 1 + (int)(0.5 * scale);
         int innerY = (int)rect.Y + 1 + (int)(0.5 * scale);
@@ -385,7 +369,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
 
     private void DrawBoxHighlight(RectangleF rect, ColorNode color, int rounding)
     {
-        if (rect == null || color == null) return;
+        if (color == null) return;
         int innerX = (int)rect.X + 1 + (int)(0.5 * rounding);
         int innerY = (int)rect.Y + 1 + (int)(0.5 * rounding);
         int innerWidth = (int)rect.Width - 1 - rounding;
