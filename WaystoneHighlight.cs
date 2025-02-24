@@ -61,6 +61,7 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                 }
                 foreach (var item in stashPanel.VisibleStash.VisibleInventoryItems)
                 {
+
                     waystones.Add(new WaystoneItem(item.Item.GetComponent<Base>(), item.Item.GetComponent<Map>(), item.Item.GetComponent<Mods>(), item.GetClientRectCache, ItemLocation.Stash));
                 }
             }
@@ -77,6 +78,8 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
             } 
             // Add inventory items
             var inventoryItems = GameController.IngameState.ServerData.PlayerInventories[0].Inventory.InventorySlotItems;
+            
+
             foreach (var item in inventoryItems)
             {
                 waystones.Add(new(item.Item.GetComponent<Base>(), item.Item.GetComponent<Map>(), item.Item.GetComponent<Mods>(), item.GetClientRect(), ItemLocation.Inventory));
@@ -152,42 +155,69 @@ public class WaystoneHighlight : BaseSettingsPlugin<WaystoneHighlightSettings>
                     switch (mod.Name)
                     {
                         case "MapDroppedItemRarityIncrease":
-                            iir += mod.Values[0];
+                            if (mod.Values.Count > 0)
+                            {
+                                iir += mod.Values[0];
+                            }
                             break;
                         case "MapDroppedItemQuantityIncrease":
-                            iiq += mod.Values[0];
-                            if (mod.Values.Count != 1)
+                            if (mod.Values.Count > 0)
                             {
-                                iir += mod.Values[1];
+                                iiq += mod.Values[0];
+                                if (mod.Values.Count > 1)
+                                {
+                                    iir += mod.Values[1];
+                                }
                             }
                             break;
                         case "MapRareMonstersAdditionalModifier":
                             extraRareMod = true;
                             break;
                         case "MapPackSizeIncrease":
-                            packSize += mod.Values[0];
+                            if (mod.Values.Count > 0)
+                            {
+                                packSize += mod.Values[0];
+                            }
                             break;
                         case "MapMagicPackSizeIncrease":
-                            magicPackSize += mod.Values[0];
+                            if (mod.Values.Count > 0)
+                            {
+                                magicPackSize += mod.Values[0];
+                            }
                             break;
                         case "MapTotalEffectivenessIncrease":
-                            extraPacks += mod.Values[0];
+                            if (mod.Values.Count > 0)
+                            {
+                                extraPacks += mod.Values[0];
+                            }
                             break;
                         case "MapMagicPackIncrease":
-                            extraMagicPack += mod.Values[0];
+                            if (mod.Values.Count > 0)
+                            {
+                                extraMagicPack += mod.Values[0];
+                            }
                             break;
                         case "MapMagicRarePackIncrease":
-                            extraRarePack += mod.Values[0];
-                            if (mod.Values.Count != 1)
+                            if (mod.Values.Count > 0)
+                            {
+                                extraRarePack += mod.Values[0];
+                            }
+                            if (mod.Values.Count > 1)
                             {
                                 extraMagicPack += mod.Values[1];
                             }
                             break;
                         case "MapRarePackIncrease":
-                            extraRarePack += mod.Values[0];
+                            if (mod.Values.Count > 0)
+                            {
+                                extraRarePack += mod.Values[0];
+                            }
                             break;
                         case string s when s.StartsWith("MapMonsterAdditionalPacks"):
-                            additionalPacks += mod.Values[0];
+                            if (mod.Values.Count > 0)
+                            {
+                                additionalPacks += mod.Values[0];
+                            }
                             break;
                     }
                 }
