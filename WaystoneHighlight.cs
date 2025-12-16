@@ -174,53 +174,31 @@ namespace WaystoneHighlight
                             break;
                         }
 
-                        switch (mod.Name)
+                        
+                        if (mod.ModRecord?.StatNames != null)
                         {
-                            case "MapDroppedItemRarityIncrease":
-                                if (mod.Values.Count > 0)
-                                    iir += mod.Values[0];
-                                break;
-                            case "MapDroppedItemQuantityIncrease":
-                                if (mod.Values.Count > 0)
-                                {
-                                    iiq += mod.Values[0];
-                                    if (mod.Values.Count > 1)
-                                        iir += mod.Values[1];
-                                }
-                                break;
-                            case "MapRareMonstersAdditionalModifier":
-                                extraRareMod = true;
-                                break;
-                            case "MapPackSizeIncrease":
-                                if (mod.Values.Count > 0)
-                                    packSize += mod.Values[0];
-                                break;
-                            case "MapMagicPackSizeIncrease":
-                                if (mod.Values.Count > 0)
-                                    magicPackSize += mod.Values[0];
-                                break;
-                            case "MapTotalEffectivenessIncrease":
-                                if (mod.Values.Count > 0)
-                                    extraPacks += mod.Values[0];
-                                break;
-                            case "MapMagicPackIncrease":
-                                if (mod.Values.Count > 0)
-                                    extraMagicPack += mod.Values[0];
-                                break;
-                            case "MapMagicRarePackIncrease":
-                                if (mod.Values.Count > 0)
-                                    extraRarePack += mod.Values[0];
-                                if (mod.Values.Count > 1)
-                                    extraMagicPack += mod.Values[1];
-                                break;
-                            case "MapRarePackIncrease":
-                                if (mod.Values.Count > 0)
-                                    extraRarePack += mod.Values[0];
-                                break;
-                            default:
-                                if (mod.Name.StartsWith("MapMonsterAdditionalPacks") && mod.Values.Count > 0)
-                                    additionalPacks += mod.Values[0];
-                                break;
+                            for (int i = 0; i < mod.ModRecord.StatNames.Length && i < mod.Values.Count; i++)
+                            {
+                                var statKey = mod.ModRecord.StatNames[i]?.Key;
+                                if (statKey == null) continue;
+
+                                if (statKey.Contains("map_item_drop_quantity", StringComparison.OrdinalIgnoreCase))
+                                    iiq += mod.Values[i];
+                                else if (statKey.Contains("map_item_drop_rarity", StringComparison.OrdinalIgnoreCase))
+                                    iir += mod.Values[i];
+                                else if (statKey.Contains("map_number_of_rare_packs", StringComparison.OrdinalIgnoreCase))
+                                    extraRarePack += mod.Values[i];
+                                else if (statKey.Contains("map_rare_monster_num_additional_modifiers", StringComparison.OrdinalIgnoreCase))
+                                    extraRareMod = true;
+                                else if (statKey.Contains("map_pack_size_+%", StringComparison.OrdinalIgnoreCase))
+                                    packSize += mod.Values[i];
+                                else if (statKey.Contains("map_number_of_magic_packs", StringComparison.OrdinalIgnoreCase))
+                                    magicPackSize += mod.Values[i];
+                                else if (statKey.Contains("map_monster_tre_+%", StringComparison.OrdinalIgnoreCase))
+                                    extraPacks += mod.Values[i];
+                                else if (statKey.Contains("map_monster_additional", StringComparison.OrdinalIgnoreCase))
+                                    additionalPacks += mod.Values[i];
+                            }
                         }
                     }
 
